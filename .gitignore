@@ -1,5 +1,3 @@
-# ============ DJANGO SPECIFIC ============
-# Settings files - PROTECT THESE!
 **/settings.py
 **/settings/*.py
 **/local_settings.py
@@ -17,8 +15,6 @@ media/
 # Static files (collected)
 staticfiles/
 
-# ============ YOUR PROJECT SPECIFIC ============
-# Игнорировать конкретный файл настроек вашего проекта
 junitcompass/junitcompass/settings.py
 
 # Byte-compiled / optimized / DLL files
