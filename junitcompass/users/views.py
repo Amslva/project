@@ -1,10 +1,9 @@
-from django.contrib.auth import  logout
-from django.contrib.auth.views import LoginView, LogoutView
-from django.http import  HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
-
-from users.forms import LoginUserForm, RegisterUserForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView
+from users.forms import LoginUserForm, RegisterUserForm, ProfileForm
 
 
 class LoginUser(LoginView):
@@ -12,14 +11,22 @@ class LoginUser(LoginView):
     template_name = 'users/login.html'
     extra_context = {'title': 'Авторизация'}
 
-def register(request):
-    if request.method == 'POST':
-        form = RegisterUserForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
-            return render(request, 'users/register_done.html')
-    else:
-        form = RegisterUserForm()
-    return render(request, 'users/register.html', {'form': form})
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'users/register.html'
+    extra_context = {'title': 'Регистрация'}
+    success_url = reverse_lazy('users:login')
+
+
+
+class Profile(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    template_name = 'users/profile.html'
+    form_class = ProfileForm
+    extra_context = {'title': 'Профиль пользователя'}
+
+    def get_success_url(self):
+        return reverse_lazy('users:profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
