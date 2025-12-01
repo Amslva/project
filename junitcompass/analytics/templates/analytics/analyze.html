@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link type="text/css" href="{% static 'analytics/css/analytics.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="analytics-container" id="analytics-page">
+    <h1>📊 АНАЛИТИКА</h1>
+    <p>Страница аналитики</p>
+</div>
+{% endblock %}

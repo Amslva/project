@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'mainpage.apps.MainpageConfig',
     'users',
+    'analytics',
     'debug_toolbar',
 
 ]
