@@ -1,9 +1,3 @@
-**/settings.py
-**/settings/*.py
-**/local_settings.py
-**/dev_settings.py
-**/prod_settings.py
-
 # Database files
 *.sqlite3
 *.sqlite
@@ -15,7 +9,6 @@ media/
 # Static files (collected)
 staticfiles/
 
-junitcompass/junitcompass/settings.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -236,6 +229,3 @@ __marimo__/
 
 d_venv/
 .idea/
-
-# Django
-settings.py
