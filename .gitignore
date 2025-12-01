@@ -1,3 +1,22 @@
+**/settings.py
+**/settings/*.py
+**/local_settings.py
+**/dev_settings.py
+**/prod_settings.py
+
+# Database files
+*.sqlite3
+*.sqlite
+db.sqlite3-journal
+
+# Media files (user uploaded)
+media/
+
+# Static files (collected)
+staticfiles/
+
+junitcompass/junitcompass/settings.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -215,5 +234,8 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-djvenv/
+d_venv/
 .idea/
+
+# Django
+settings.py
