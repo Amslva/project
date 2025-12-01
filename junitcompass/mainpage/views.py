@@ -21,9 +21,6 @@ class HomePage(ListView):
         return Profession.published.all()
 
 
-def analyze (request):
-    return render(request, 'mainpage/analyze.html', {'title': 'Analyze', 'menu': menu})
-
 
 
 class ShowPost(DetailView):
