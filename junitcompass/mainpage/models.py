@@ -19,6 +19,7 @@ class Profession(models.Model):
     is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='prof')
 
+    skills = models.ManyToManyField('Skill', related_name='professions', blank=True)
 
     objects = models.Manager()
     published = PublishedManager()
@@ -46,3 +47,32 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})
 
+
+class Skill(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Название навыка')
+    description = models.TextField(blank=True, verbose_name='Описание навыка')
+
+    study_links = models.JSONField(
+        default=list,
+        blank=True,
+        verbose_name='Ссылки для изучения',
+        help_text='Список словарей в формате [{"title": "Название", "url": "ссылка"}, ...]'
+    )
+
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Навык'
+        verbose_name_plural = 'Навыки'
+        indexes = [
+            models.Index(fields=['name']),
+        ]
+
+    def get_absolute_url(self):
+        return reverse('skill_detail', kwargs={'skill_slug': self.slug})

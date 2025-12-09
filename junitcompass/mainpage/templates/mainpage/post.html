@@ -1,11 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{post.title}}</h1>
+<h1>Обучение профессии: {{ post.title }}</h1>
 
-{% if post.photo %}
-<p ><img class="img-article-left" src="{{post.photo.url}}"></p>
+<div class="profession-meta">
+    <p>Категория: <a href="{{ post.cat.get_absolute_url }}">{{ post.cat.name }}</a></p>
+</div>
+
+<div class="profession-description">
+    <h2>Описание профессии</h2>
+    {{ post.content|linebreaks }}
+</div>
+
+{% if skills %}
+<div class="skills-section">
+    <h2>Необходимые навыки</h2>
+
+    {% for skill in skills %}
+    <div class="skill-item">
+        <h3>{{ skill.name }}</h3>
+
+        {% if skill.description %}
+        <p>{{ skill.description }}</p>
+        {% endif %}
+
+        {% if skill.study_links %}
+        <div class="study-links">
+            <h4>Ресурсы для изучения:</h4>
+            <ul>
+                {% for link in skill.study_links %}
+                <li>
+                    <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
+                        {{ link.title }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="no-skills">
+    <p>Для этой профессии пока не добавлены навыки.</p>
+</div>
 {% endif %}
 
-{{post.content|linebreaks}}
+<div class="actions">
+    <a href="{% url 'home' %}">← Вернуться к списку профессий</a>
+</div>
 {% endblock %}
