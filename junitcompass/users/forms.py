@@ -6,30 +6,30 @@ from django.contrib.auth.models import User
 
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    password = forms.CharField(label='Пароль', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+
     class Meta:
         model = get_user_model()
         fields = ['username', 'password']
 
-class RegisterUserForm(forms.ModelForm):
-    username = forms.CharField(label="Логин")
-    password = forms.CharField(label="Пароль", widget=forms.PasswordInput())
-    password2 = forms.CharField(label="Повтор пароля", widget=forms.PasswordInput())
 
+class RegisterUserForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'first_name', 'last_name', 'password', 'password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
         labels = {
             'email': 'E-mail',
             'first_name': "Имя",
             'last_name': "Фамилия",
         }
-
-    def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-            raise forms.ValidationError("Пароли не совпадают!")
-        return cd['password']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-input'}),
+            'email': forms.EmailInput(attrs={'class': 'form-input'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-input'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-input'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-input'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-input'}),
+        }
 
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -37,10 +37,17 @@ class RegisterUserForm(forms.ModelForm):
             raise forms.ValidationError("Такой E-mail уже существует!")
         return email
 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user
+
 
 class ProfileForm(forms.ModelForm):
     username = forms.CharField(disabled=True, widget=forms.TextInput(attrs={'class': 'form-input'}))
-    email = forms.CharField(disabled=True, widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    email = forms.CharField(disabled=True, widget=forms.EmailInput(attrs={'class': 'form-input'}))
 
     class Meta:
         model = get_user_model()
