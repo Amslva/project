@@ -7,12 +7,83 @@
 {% endblock %}
 
 {% block content %}
-<div class="analytics-container" id="analytics-page">
-    <h1>АНАЛИТИКА</h1>
+<div class="analytics-page">
+    <h1>АНАЛИТИКА IT-РЫНКА</h1>
+
     <p>Ключевой тренд на современном IT-рынке — трансформация профессий.
         Количество вакансий сокращается из-за автоматизации и передачи рутинных задач ИИ.
         Работодатели теперь ждут от начинающих специалистов не просто умения писать код,
         а способности решать комплексные задачи и быстро адаптироваться к новым технологиям.</p>
+    <div class="stats">
+        <div class="stat-box">
+            <div class="stat-number">142K</div>
+            <div class="stat-text">Вакансий</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">8.7%</div>
+            <div class="stat-text">Рост зарплат</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">35%</div>
+            <div class="stat-text">Удаленная работа</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">23%</div>
+            <div class="stat-text">Рост количества резюме</div>
+        </div>
+    </div>
+
+    <div class="charts">
+
+        <div class="chart-box">
+            <h3>Топ технологий</h3>
+            <canvas id="techChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>География вакансий</h3>
+            <canvas id="geoChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>Типы занятости</h3>
+            <canvas id="employmentChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>Зарплатные вилки (тыс. руб.)</h3>
+            <canvas id="salaryChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>Вакансии по специализациям</h3>
+            <canvas id="vacanciesChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>Языки программирования</h3>
+            <canvas id="languagesChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>Backend фреймворки</h3>
+            <canvas id="backendChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>Frontend фреймворки</h3>
+            <canvas id="frontendChart"></canvas>
+        </div>
+
+    </div>
+
+    <div class="action-section">
+        <p>Хотите получать персональные рекомендации?</p>
+        <div class="buttons">
+            <a href="{% url 'users:register' %}" class="btn btn-register">Создать аккаунт</a>
+            <a href="{% url 'users:login' %}" class="btn btn-login">Войти</a>
+        </div>
+    </div>
 </div>
 
 <script>
